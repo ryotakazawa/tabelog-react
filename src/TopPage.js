@@ -7,12 +7,17 @@ function TopPage() {
   const [url, setUrl] = useState(
       'http://hn.algolia.com/api/v1/search?query=ruby',
   );
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
+
       const result = await axios(url);
 
       setData(result.data);
+
+      setIsLoading(false);
     };
 
     fetchData();
@@ -33,6 +38,9 @@ function TopPage() {
       >
         Search
       </button>
+      {isLoading ? (
+        <div>Loading ...</div>
+      ) : (
       <ul>
         {data.hits.map(item => (
           <li key={item.objectID}>
@@ -40,6 +48,7 @@ function TopPage() {
           </li>
         ))}
       </ul>
+      )}
     </>
   );
 }
