@@ -8,15 +8,20 @@ function TopPage() {
       'http://hn.algolia.com/api/v1/search?query=ruby',
   );
   const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsError(false);
       setIsLoading(true);
 
-      const result = await axios(url);
+      try {
+        const result = await axios(url);
 
-      setData(result.data);
-
+        setData(result.data);
+      } catch (error) {
+        setIsError(true);
+      }
       setIsLoading(false);
     };
 
@@ -38,6 +43,7 @@ function TopPage() {
       >
         Search
       </button>
+      {isError && <div>Something went wrong ...</div>}
       {isLoading ? (
         <div>Loading ...</div>
       ) : (
