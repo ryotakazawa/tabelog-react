@@ -43,6 +43,14 @@ function TopPage() {
       >
         Search
       </button>
+      <button
+        type="button"
+        onClick={() =>
+          setQuery("")
+        }
+      >
+        Reset
+      </button>
       {isError && <div>Something went wrong ...</div>}
       {isLoading ? (
         <div>Loading ...</div>
